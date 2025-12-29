@@ -1,161 +1,301 @@
-<style>
-  :root{
-    --bg:#F6F7FB;
-    --bg2:#FFFFFF;
-    --card:#FFFFFF;
-    --text:#0A0D14;
-    --muted:#3C4663;
-    --line:rgba(10,13,20,.10);
-    --glow1:#2D5BFF;
-    --glow2:#11D6A6;
-    --glow3:#B24CFF;
-    --shadow: 0 18px 50px rgba(10,13,20,.10);
-    --radius:22px;
-    --max:1180px;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial;
-    color:var(--text);
-    background:
-      radial-gradient(900px 600px at 10% 10%, rgba(45,91,255,.14), transparent 60%),
-      radial-gradient(900px 600px at 85% 15%, rgba(17,214,166,.10), transparent 60%),
-      radial-gradient(900px 700px at 50% 110%, rgba(178,76,255,.10), transparent 55%),
-      linear-gradient(180deg, var(--bg), var(--bg2));
-    overflow-x:hidden;
-  }
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:var(--max); margin:0 auto; padding:0 22px}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fuse Core AI — Enterprise AI Without the Risk</title>
+  <meta name="description" content="Fuse Core AI builds secure, production-ready enterprise AI systems." />
 
-  .topbar{
-    position:sticky; top:0; z-index:50;
-    backdrop-filter: blur(14px);
-    background: rgba(246,247,251,.72);
-    border-bottom: 1px solid var(--line);
-  }
-  .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:14px}
-  .logo{display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:.2px}
-  .mark{
-    width:34px; height:34px; border-radius:10px;
-    background:
-      radial-gradient(14px 14px at 35% 35%, rgba(255,255,255,.95), rgba(255,255,255,0) 60%),
-      linear-gradient(135deg, rgba(45,91,255,.95), rgba(17,214,166,.92));
-    box-shadow: 0 10px 24px rgba(45,91,255,.18);
-    border:1px solid rgba(10,13,20,.10);
-  }
-  .links{display:flex; gap:16px; align-items:center}
-  .links a{
-    color: rgba(10,13,20,.70);
-    font-weight:750;
-    padding:10px 10px;
-    border-radius:12px;
-    transition:.15s ease;
-  }
-  .links a:hover{color:var(--text); background: rgba(10,13,20,.06)}
+  <style>
+    :root{
+      --bg:#F6F7FB;
+      --bg2:#FFFFFF;
+      --card:#FFFFFF;
+      --text:#0A0D14;
+      --muted:#3C4663;
+      --line:rgba(10,13,20,.12);
+      --accent1:#2D5BFF;
+      --accent2:#11D6A6;
+      --accent3:#B24CFF;
+      --shadow:0 20px 45px rgba(10,13,20,.12);
+      --radius:22px;
+      --max:1180px;
+    }
 
-  .btns{display:flex; gap:10px; align-items:center}
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding:10px 14px;
-    border-radius:14px;
-    font-weight:850;
-    border:1px solid rgba(10,13,20,.14);
-    background: rgba(255,255,255,.85);
-    color:var(--text);
-    transition:.15s ease;
-    white-space:nowrap;
-  }
-  .btn:hover{transform: translateY(-1px); background: rgba(10,13,20,.04)}
-  .btn.primary{
-    border:none;
-    background: linear-gradient(135deg, rgba(10,13,20,.95), rgba(10,13,20,.95));
-    color:#fff;
-    box-shadow: 0 16px 38px rgba(10,13,20,.18);
-  }
-  .btn.primary:hover{filter: brightness(1.03)}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 10% 10%, rgba(45,91,255,.12), transparent 60%),
+        radial-gradient(900px 600px at 85% 15%, rgba(17,214,166,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+    }
 
-  .hero{padding:72px 0 36px; position:relative}
-  .heroGrid{display:grid; grid-template-columns: 1.15fr .85fr; gap:26px; align-items:stretch}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:var(--max);margin:auto;padding:0 22px}
 
-  .pill{
-    display:inline-flex; gap:10px; align-items:center;
-    padding:8px 12px;
-    border-radius:999px;
-    border:1px solid rgba(10,13,20,.14);
-    background: rgba(255,255,255,.70);
-    color: rgba(10,13,20,.75);
-    font-weight:800;
-  }
-  .dot{
-    width:9px;height:9px;border-radius:999px;
-    background: linear-gradient(135deg, var(--glow1), var(--glow2));
-    box-shadow: 0 0 0 5px rgba(45,91,255,.10);
-  }
+    /* NAV */
+    .nav{
+      position:sticky;top:0;z-index:10;
+      backdrop-filter:blur(10px);
+      background:rgba(246,247,251,.8);
+      border-bottom:1px solid var(--line);
+    }
+    .navInner{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:16px 0;
+    }
+    .logo{display:flex;align-items:center;gap:12px;font-weight:900}
+    .mark{
+      width:32px;height:32px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      box-shadow:0 10px 25px rgba(45,91,255,.25);
+    }
+    .btn{
+      padding:10px 16px;border-radius:14px;
+      font-weight:800;border:1px solid var(--line);
+      background:white;
+    }
+    .btn.primary{
+      background:#0A0D14;color:white;border:none;
+    }
 
-  h1{
-    margin:16px 0 10px;
-    font-size: clamp(48px, 5.6vw, 78px);
-    line-height: 1.00;
-    letter-spacing: -1.4px;
-  }
-  .accent{
-    background: linear-gradient(135deg, var(--glow1), var(--glow3));
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-  }
-  .sub{
-    margin:0;
-    font-size: clamp(16px, 1.35vw, 20px);
-    line-height:1.55;
-    color: rgba(10,13,20,.70);
-    max-width: 56ch;
-    font-weight: 600;
-  }
+    /* HERO */
+    .hero{padding:80px 0 60px}
+    .heroGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px}
+    h1{
+      font-size:clamp(52px,6vw,82px);
+      line-height:1.02;
+      letter-spacing:-1.5px;
+      margin:0 0 12px;
+    }
+    .accent{
+      background:linear-gradient(135deg,var(--accent1),var(--accent3));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .sub{
+      font-size:20px;
+      color:var(--muted);
+      max-width:55ch;
+      font-weight:600;
+    }
+    .meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+    .meta span{
+      padding:8px 12px;border-radius:999px;
+      border:1px solid var(--line);
+      background:white;
+      font-weight:700;
+      color:var(--muted);
+    }
 
-  .heroActions{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap}
-  .heroMeta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; font-weight:800}
-  .heroMeta span{
-    padding:8px 10px;
-    border-radius:999px;
-    border:1px solid rgba(10,13,20,.12);
-    background: rgba(255,255,255,.72);
-    color: rgba(10,13,20,.75);
-  }
+    /* SIDE CARD */
+    .side{
+      background:white;
+      border-radius:var(--radius);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+    }
+    .side::before{
+      content:"";
+      position:absolute;
+      inset:-40px -40px auto auto;
+      width:420px;height:320px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(45,91,255,.18), transparent 55%),
+        radial-gradient(circle at 70% 40%, rgba(17,214,166,.14), transparent 55%);
+      filter:blur(6px);
+    }
 
-  .sideCard{
-    border-radius: var(--radius);
-    border:1px solid rgba(10,13,20,.12);
-    background: rgba(255,255,255,.75);
-    box-shadow: var(--shadow);
-    padding:18px;
-    position:relative;
-    overflow:hidden;
-    min-height: 280px;
-  }
-  /* Node-graph “attention” graphic */
-  .sideCard::before{
-    content:"";
-    position:absolute; inset:-40px -60px auto auto;
-    width:520px; height:420px;
-    background:
-      radial-gradient(circle at 20% 25%, rgba(45,91,255,.20), transparent 55%),
-      radial-gradient(circle at 70% 35%, rgba(17,214,166,.16), transparent 55%),
-      radial-gradient(circle at 55% 75%, rgba(178,76,255,.14), transparent 55%);
-    filter: blur(8px);
-    opacity:.9;
-    pointer-events:none;
-  }
-  .graph{
-    margin-top:14px;
-    border-radius: 18px;
-    border:1px solid rgba(10,13,20,.10);
-    background: rgba(10,13,20,.02);
-    padding:10px;
-  }
-  .sideCard h3{margin:0 0 10px; font-size: 18px; letter-spacing:.2px}
-  .sideCard p{margin:0 0 14px; color: rgba(10,13,20,.70); line-height:1.55; font-size: 14.5px; font-weight:600}
+    /* GRAPH */
+    .graph{margin-top:16px}
 
-  .miniList{display:grid; gap:10px; margin-top
+    /* SECTIONS */
+    .section{padding:70px 0}
+    h2{
+      font-size:clamp(36px,4vw,52px);
+      margin:0 0 14px;
+      letter-spacing:-.8px;
+    }
+    .section p{color:var(--muted);font-size:18px;font-weight:600}
+
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+
+    .card{
+      background:white;
+      border-radius:var(--radius);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      padding:22px;
+    }
+    .card h3{margin:0 0 8px;font-size:20px}
+    .card p{margin:0;color:var(--muted);font-weight:600}
+
+    /* PROCESS */
+    .process{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+    .step{
+      background:white;
+      border-radius:18px;
+      border:1px solid var(--line);
+      padding:16px;
+      font-weight:700;
+    }
+
+    /* CTA */
+    .cta{
+      padding:80px 0;
+    }
+    .ctaBox{
+      background:white;
+      border-radius:28px;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      padding:32px;
+      display:flex;justify-content:space-between;align-items:center;gap:20px;
+    }
+
+    /* FOOTER */
+    footer{
+      border-top:1px solid var(--line);
+      padding:30px 0 40px;
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    @media(max-width:900px){
+      .heroGrid,.grid3,.grid2,.process,.ctaBox{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="wrap navInner">
+    <div class="logo">
+      <div class="mark"></div>
+      Fuse Core AI
+    </div>
+    <div>
+      <a class="btn" href="#contact">Request Proposal</a>
+      <a class="btn primary" href="#contact">Book Call</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap heroGrid">
+    <div>
+      <h1>Enterprise AI —<br><span class="accent">without the risk.</span></h1>
+      <p class="sub">
+        Fuse Core AI designs and deploys secure, production-ready AI systems
+        for organizations that can’t afford failure.
+      </p>
+      <div class="meta">
+        <span>Security-First</span>
+        <span>Cloud-Agnostic</span>
+        <span>Production-Ready</span>
+      </div>
+    </div>
+
+    <div class="side">
+      <h3>Why companies call us</h3>
+      <p>AI is easy to demo. It’s hard to deploy safely. We make sure your AI systems
+         work under real-world pressure.</p>
+
+      <div class="graph">
+        <svg viewBox="0 0 520 160" width="100%" height="120">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1">
+              <stop offset="0" stop-color="#2D5BFF"/>
+              <stop offset="1" stop-color="#11D6A6"/>
+            </linearGradient>
+          </defs>
+          <g fill="none" stroke="rgba(10,13,20,.25)" stroke-width="2">
+            <path d="M60 90 C140 20, 210 140, 290 70 S430 60, 480 100"/>
+          </g>
+          <g fill="url(#g)">
+            <circle cx="60" cy="90" r="8"/>
+            <circle cx="150" cy="45" r="8"/>
+            <circle cx="240" cy="120" r="8"/>
+            <circle cx="330" cy="70" r="8"/>
+            <circle cx="420" cy="60" r="8"/>
+            <circle cx="480" cy="100" r="8"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section class="section">
+  <div class="wrap">
+    <h2>AI systems built to survive reality.</h2>
+    <p>No pilots. No hype. Just AI that works where it matters.</p>
+
+    <div class="grid3">
+      <div class="card">
+        <h3>AI Use Case Strategy</h3>
+        <p>Identify high-impact, low-risk AI opportunities.</p>
+      </div>
+      <div class="card">
+        <h3>Secure AI Copilots</h3>
+        <p>Assistants that respect data boundaries and policies.</p>
+      </div>
+      <div class="card">
+        <h3>Enterprise LLM Systems</h3>
+        <p>Reliable, observable, production-grade AI infrastructure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section">
+  <div class="wrap">
+    <h2>From strategy to production.</h2>
+    <div class="process">
+      <div class="step">Assess</div>
+      <div class="step">Design</div>
+      <div class="step">Build</div>
+      <div class="step">Deploy</div>
+      <div class="step">Scale</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="ctaBox">
+      <div>
+        <h2>Ready to deploy AI with confidence?</h2>
+        <p>Let’s talk before AI becomes a liability.</p>
+      </div>
+      <div>
+        <a class="btn primary" href="mailto:info@fusecoreai.com">Email Us</a>
+        <a class="btn" href="tel:+13022508807">Call</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    © 2025 Fuse Core AI — Enterprise AI, done right.
+  </div>
+</footer>
+
+</body>
+</html>
