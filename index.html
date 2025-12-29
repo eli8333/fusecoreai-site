@@ -1,523 +1,161 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Fuse Core AI — Enterprise AI Without the Risk</title>
-  <meta name="description" content="Fuse Core AI designs and deploys secure, production-ready AI systems across AWS, Azure, GCP, and OCI." />
-  <style>
-    :root{
-      --bg:#070A12;
-      --bg2:#0B1020;
-      --card:#0F1731;
-      --text:#EAF0FF;
-      --muted:#A8B3D6;
-      --line:rgba(234,240,255,.10);
-      --glow1:#4F7CFF;
-      --glow2:#26E6B8;
-      --glow3:#B14DFF;
-      --shadow: 0 18px 50px rgba(0,0,0,.55);
-      --radius:22px;
-      --max:1180px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background:
-        radial-gradient(900px 600px at 10% 10%, rgba(79,124,255,.22), transparent 60%),
-        radial-gradient(900px 600px at 85% 15%, rgba(38,230,184,.18), transparent 60%),
-        radial-gradient(900px 700px at 50% 110%, rgba(177,77,255,.14), transparent 55%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      overflow-x:hidden;
-    }
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 22px}
-    .topbar{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(14px);
-      background: rgba(7,10,18,.55);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:14px;
-    }
-    .logo{
-      display:flex; align-items:center; gap:12px;
-      font-weight:800; letter-spacing:.2px;
-    }
-    .mark{
-      width:34px; height:34px; border-radius:10px;
-      background:
-        radial-gradient(14px 14px at 35% 35%, rgba(234,240,255,.95), rgba(234,240,255,.0) 60%),
-        linear-gradient(135deg, rgba(79,124,255,.95), rgba(38,230,184,.85));
-      box-shadow: 0 10px 30px rgba(79,124,255,.25);
-      border:1px solid rgba(234,240,255,.18);
-    }
-    .links{display:flex; gap:16px; align-items:center}
-    .links a{
-      color:var(--muted);
-      font-weight:600;
-      padding:10px 10px;
-      border-radius:12px;
-      transition:.15s ease;
-    }
-    .links a:hover{color:var(--text); background: rgba(234,240,255,.06)}
-    .btns{display:flex; gap:10px; align-items:center}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:10px 14px;
-      border-radius:14px;
-      font-weight:750;
-      border:1px solid rgba(234,240,255,.14);
-      background: rgba(234,240,255,.06);
-      color:var(--text);
-      transition:.15s ease;
-      white-space:nowrap;
-    }
-    .btn:hover{transform: translateY(-1px); background: rgba(234,240,255,.09)}
-    .btn.primary{
-      border: none;
-      background: linear-gradient(135deg, rgba(79,124,255,.95), rgba(38,230,184,.92));
-      color:#06101A;
-      box-shadow: 0 16px 40px rgba(79,124,255,.22);
-    }
-    .btn.primary:hover{filter: brightness(1.05)}
-    .hero{
-      padding:68px 0 34px;
-      position:relative;
-    }
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap:26px;
-      align-items:stretch;
-    }
-    .pill{
-      display:inline-flex; gap:10px; align-items:center;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(234,240,255,.14);
-      background: rgba(234,240,255,.05);
-      color:var(--muted);
-      font-weight:650;
-    }
-    .dot{
-      width:9px;height:9px;border-radius:999px;
-      background: linear-gradient(135deg, var(--glow1), var(--glow2));
-      box-shadow: 0 0 0 4px rgba(79,124,255,.12);
-    }
-    h1{
-      margin:16px 0 10px;
-      font-size: clamp(44px, 5.2vw, 74px);
-      line-height: 1.02;
-      letter-spacing: -1.2px;
-    }
-    .sub{
-      margin:0;
-      font-size: clamp(16px, 1.35vw, 20px);
-      line-height:1.55;
-      color:var(--muted);
-      max-width: 56ch;
-    }
-    .heroActions{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap}
-    .heroMeta{
-      display:flex; gap:12px; flex-wrap:wrap;
-      margin-top:18px;
-      color: var(--muted);
-      font-weight:650;
-    }
-    .heroMeta span{
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(234,240,255,.12);
-      background: rgba(234,240,255,.03);
-    }
-    .sideCard{
-      border-radius: var(--radius);
-      border:1px solid rgba(234,240,255,.12);
-      background:
-        radial-gradient(320px 240px at 30% 20%, rgba(79,124,255,.22), transparent 60%),
-        radial-gradient(320px 240px at 80% 35%, rgba(38,230,184,.18), transparent 60%),
-        rgba(15,23,49,.55);
-      box-shadow: var(--shadow);
-      padding:18px;
-      position:relative;
-      overflow:hidden;
-      min-height: 260px;
-    }
-    .sideCard h3{
-      margin:0 0 10px;
-      font-size: 18px;
-      letter-spacing:.2px;
-    }
-    .sideCard p{
-      margin:0 0 14px;
-      color: var(--muted);
-      line-height:1.55;
-      font-size: 14.5px;
-    }
-    .miniList{display:grid; gap:10px; margin-top:14px}
-    .miniItem{
-      border:1px solid rgba(234,240,255,.10);
-      background: rgba(7,10,18,.35);
-      border-radius: 16px;
-      padding:12px;
-    }
-    .miniItem b{display:block; font-size: 13.5px}
-    .miniItem span{color:var(--muted); font-size: 13px}
-    .section{
-      padding:44px 0;
-    }
-    .sectionHead{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:14px; margin-bottom:16px;
-    }
-    .sectionHead h2{
-      margin:0;
-      font-size: clamp(28px, 3.2vw, 42px);
-      letter-spacing:-.6px;
-      line-height:1.08;
-    }
-    .sectionHead p{
-      margin:0;
-      color: var(--muted);
-      max-width: 58ch;
-      line-height:1.55;
-      font-weight: 550;
-    }
-    .grid3{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap:14px;
-    }
-    .grid2{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap:14px;
-    }
-    .card{
-      border-radius: var(--radius);
-      border:1px solid rgba(234,240,255,.12);
-      background: rgba(15,23,49,.45);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      padding:18px;
-    }
-    .card h3{margin:0 0 8px; font-size: 18px}
-    .card p{margin:0; color: var(--muted); line-height:1.55}
-    .kicker{
-      color: rgba(234,240,255,.85);
-      font-weight: 800;
-      letter-spacing: .6px;
-      text-transform: uppercase;
-      font-size: 11px;
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-    }
-    .kLine{
-      width:22px; height:2px; border-radius:999px;
-      background: linear-gradient(90deg, var(--glow1), var(--glow2));
-    }
-    .process{
-      display:grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap:10px;
-    }
-    .step{
-      border-radius: 18px;
-      border:1px solid rgba(234,240,255,.10);
-      background: rgba(7,10,18,.28);
-      padding:14px;
-      min-height: 118px;
-    }
-    .step b{display:block; font-size: 14px; margin-bottom:6px}
-    .step span{color:var(--muted); font-size: 13px; line-height:1.45}
-    .logoRow{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top: 10px;
-    }
-    .chip{
-      padding:9px 12px;
-      border-radius: 999px;
-      border:1px solid rgba(234,240,255,.12);
-      background: rgba(234,240,255,.03);
-      color: var(--muted);
-      font-weight: 650;
-    }
-    .cta{
-      padding:48px 0 70px;
-    }
-    .ctaBox{
-      border-radius: calc(var(--radius) + 6px);
-      border:1px solid rgba(234,240,255,.14);
-      background:
-        radial-gradient(500px 280px at 20% 25%, rgba(79,124,255,.30), transparent 60%),
-        radial-gradient(540px 320px at 90% 35%, rgba(38,230,184,.22), transparent 60%),
-        rgba(15,23,49,.55);
-      box-shadow: var(--shadow);
-      padding:26px;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-    }
-    .ctaBox h2{margin:0; font-size: clamp(26px, 3vw, 40px); line-height:1.06}
-    .ctaBox p{margin:8px 0 0; color:var(--muted); max-width:60ch; line-height:1.55}
-    footer{
-      border-top:1px solid var(--line);
-      padding:24px 0 34px;
-      color: var(--muted);
-    }
-    .footGrid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:18px;
-    }
-    .footLinks{display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end}
-    .footLinks a{color:var(--muted); font-weight:650; padding:8px 10px; border-radius:12px}
-    .footLinks a:hover{color:var(--text); background: rgba(234,240,255,.06)}
-    .small{font-size: 13px; line-height:1.55}
+<style>
+  :root{
+    --bg:#F6F7FB;
+    --bg2:#FFFFFF;
+    --card:#FFFFFF;
+    --text:#0A0D14;
+    --muted:#3C4663;
+    --line:rgba(10,13,20,.10);
+    --glow1:#2D5BFF;
+    --glow2:#11D6A6;
+    --glow3:#B24CFF;
+    --shadow: 0 18px 50px rgba(10,13,20,.10);
+    --radius:22px;
+    --max:1180px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial;
+    color:var(--text);
+    background:
+      radial-gradient(900px 600px at 10% 10%, rgba(45,91,255,.14), transparent 60%),
+      radial-gradient(900px 600px at 85% 15%, rgba(17,214,166,.10), transparent 60%),
+      radial-gradient(900px 700px at 50% 110%, rgba(178,76,255,.10), transparent 55%),
+      linear-gradient(180deg, var(--bg), var(--bg2));
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 22px}
 
-    /* Responsive */
-    @media (max-width: 980px){
-      .heroGrid{grid-template-columns: 1fr}
-      .process{grid-template-columns: 1fr 1fr}
-      .grid3{grid-template-columns: 1fr}
-      .grid2{grid-template-columns: 1fr}
-      .footGrid{grid-template-columns: 1fr}
-      .footLinks{justify-content:flex-start}
-      .links{display:none}
-    }
-  </style>
-</head>
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(14px);
+    background: rgba(246,247,251,.72);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:14px}
+  .logo{display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:.2px}
+  .mark{
+    width:34px; height:34px; border-radius:10px;
+    background:
+      radial-gradient(14px 14px at 35% 35%, rgba(255,255,255,.95), rgba(255,255,255,0) 60%),
+      linear-gradient(135deg, rgba(45,91,255,.95), rgba(17,214,166,.92));
+    box-shadow: 0 10px 24px rgba(45,91,255,.18);
+    border:1px solid rgba(10,13,20,.10);
+  }
+  .links{display:flex; gap:16px; align-items:center}
+  .links a{
+    color: rgba(10,13,20,.70);
+    font-weight:750;
+    padding:10px 10px;
+    border-radius:12px;
+    transition:.15s ease;
+  }
+  .links a:hover{color:var(--text); background: rgba(10,13,20,.06)}
 
-<body>
-  <div class="topbar">
-    <div class="wrap">
-      <div class="nav">
-        <a class="logo" href="#top">
-          <span class="mark" aria-hidden="true"></span>
-          <span>Fuse Core AI</span>
-        </a>
-        <div class="links" aria-label="Primary">
-          <a href="#solutions">Solutions</a>
-          <a href="#usecases">Use Cases</a>
-          <a href="#process">Process</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <div class="btns">
-          <a class="btn" href="#contact">Request Proposal</a>
-          <a class="btn primary" href="#contact">Book a Call</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  .btns{display:flex; gap:10px; align-items:center}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:10px 14px;
+    border-radius:14px;
+    font-weight:850;
+    border:1px solid rgba(10,13,20,.14);
+    background: rgba(255,255,255,.85);
+    color:var(--text);
+    transition:.15s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{transform: translateY(-1px); background: rgba(10,13,20,.04)}
+  .btn.primary{
+    border:none;
+    background: linear-gradient(135deg, rgba(10,13,20,.95), rgba(10,13,20,.95));
+    color:#fff;
+    box-shadow: 0 16px 38px rgba(10,13,20,.18);
+  }
+  .btn.primary:hover{filter: brightness(1.03)}
 
-  <main id="top">
-    <section class="hero">
-      <div class="wrap">
-        <div class="heroGrid">
-          <div>
-            <div class="pill"><span class="dot"></span> Enterprise AI • Security-First • Production-Ready</div>
-            <h1>Enterprise AI —<br/>without the risk.</h1>
-            <p class="sub">
-              Fuse Core AI designs and deploys AI systems that actually run in production:
-              secure, scalable, and built to fit your cloud and compliance requirements.
-            </p>
+  .hero{padding:72px 0 36px; position:relative}
+  .heroGrid{display:grid; grid-template-columns: 1.15fr .85fr; gap:26px; align-items:stretch}
 
-            <div class="heroActions">
-              <a class="btn primary" href="#contact">Book a Strategy Call</a>
-              <a class="btn" href="#solutions">See Solutions</a>
-            </div>
+  .pill{
+    display:inline-flex; gap:10px; align-items:center;
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid rgba(10,13,20,.14);
+    background: rgba(255,255,255,.70);
+    color: rgba(10,13,20,.75);
+    font-weight:800;
+  }
+  .dot{
+    width:9px;height:9px;border-radius:999px;
+    background: linear-gradient(135deg, var(--glow1), var(--glow2));
+    box-shadow: 0 0 0 5px rgba(45,91,255,.10);
+  }
 
-            <div class="heroMeta" aria-label="Key value props">
-              <span>No data leakage</span>
-              <span>No vendor lock-in</span>
-              <span>No proof-of-concept theater</span>
-            </div>
-          </div>
+  h1{
+    margin:16px 0 10px;
+    font-size: clamp(48px, 5.6vw, 78px);
+    line-height: 1.00;
+    letter-spacing: -1.4px;
+  }
+  .accent{
+    background: linear-gradient(135deg, var(--glow1), var(--glow3));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .sub{
+    margin:0;
+    font-size: clamp(16px, 1.35vw, 20px);
+    line-height:1.55;
+    color: rgba(10,13,20,.70);
+    max-width: 56ch;
+    font-weight: 600;
+  }
 
-          <aside class="sideCard">
-            <h3>What executives care about</h3>
-            <p>AI is easy to demo. It’s hard to ship safely. We help you move from “pilot” to production with controls you can defend.</p>
+  .heroActions{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap}
+  .heroMeta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; font-weight:800}
+  .heroMeta span{
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid rgba(10,13,20,.12);
+    background: rgba(255,255,255,.72);
+    color: rgba(10,13,20,.75);
+  }
 
-            <div class="miniList">
-              <div class="miniItem">
-                <b>Security & Governance</b>
-                <span>Access controls, auditability, policy alignment.</span>
-              </div>
-              <div class="miniItem">
-                <b>Reliability & Quality</b>
-                <span>Guardrails, evaluation, monitoring, continuous improvement.</span>
-              </div>
-              <div class="miniItem">
-                <b>Multi-Cloud Delivery</b>
-                <span>Deploy across AWS, Azure, GCP, or OCI.</span>
-              </div>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
+  .sideCard{
+    border-radius: var(--radius);
+    border:1px solid rgba(10,13,20,.12);
+    background: rgba(255,255,255,.75);
+    box-shadow: var(--shadow);
+    padding:18px;
+    position:relative;
+    overflow:hidden;
+    min-height: 280px;
+  }
+  /* Node-graph “attention” graphic */
+  .sideCard::before{
+    content:"";
+    position:absolute; inset:-40px -60px auto auto;
+    width:520px; height:420px;
+    background:
+      radial-gradient(circle at 20% 25%, rgba(45,91,255,.20), transparent 55%),
+      radial-gradient(circle at 70% 35%, rgba(17,214,166,.16), transparent 55%),
+      radial-gradient(circle at 55% 75%, rgba(178,76,255,.14), transparent 55%);
+    filter: blur(8px);
+    opacity:.9;
+    pointer-events:none;
+  }
+  .graph{
+    margin-top:14px;
+    border-radius: 18px;
+    border:1px solid rgba(10,13,20,.10);
+    background: rgba(10,13,20,.02);
+    padding:10px;
+  }
+  .sideCard h3{margin:0 0 10px; font-size: 18px; letter-spacing:.2px}
+  .sideCard p{margin:0 0 14px; color: rgba(10,13,20,.70); line-height:1.55; font-size: 14.5px; font-weight:600}
 
-    <section class="section" id="solutions">
-      <div class="wrap">
-        <div class="sectionHead">
-          <div>
-            <div class="kicker"><span class="kLine"></span> Solutions</div>
-            <h2>AI systems built to survive real life.</h2>
-          </div>
-          <p>
-            We don’t sell “AI features.” We deliver secure AI capabilities that reduce operational risk and create measurable outcomes.
-          </p>
-        </div>
-
-        <div class="grid3">
-          <div class="card">
-            <h3>AI Use Case Strategy</h3>
-            <p>Identify high-impact opportunities, define success metrics, and avoid risky or low-ROI implementations.</p>
-          </div>
-          <div class="card">
-            <h3>Secure AI Copilots</h3>
-            <p>Internal copilots that respect permissions, protect sensitive data, and integrate with your workflows.</p>
-          </div>
-          <div class="card">
-            <h3>Enterprise LLM Systems</h3>
-            <p>Production infrastructure with guardrails, evaluation, observability, and long-term maintainability.</p>
-          </div>
-        </div>
-
-        <div style="height:14px"></div>
-
-        <div class="grid2">
-          <div class="card">
-            <h3>Multi-Cloud Deployment</h3>
-            <p>Build once, deploy anywhere: AWS, Azure, GCP, or OCI — without getting trapped by one vendor.</p>
-          </div>
-          <div class="card">
-            <h3>Security & Compliance by Design</h3>
-            <p>Threat modeling, governance controls, logging/auditing, and safe integration patterns for regulated environments.</p>
-          </div>
-        </div>
-
-        <div class="logoRow" aria-label="Cloud support">
-          <span class="chip">AWS</span>
-          <span class="chip">Microsoft Azure</span>
-          <span class="chip">Google Cloud</span>
-          <span class="chip">Oracle Cloud (OCI)</span>
-          <span class="chip">OpenAI + Leading LLMs</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="usecases">
-      <div class="wrap">
-        <div class="sectionHead">
-          <div>
-            <div class="kicker"><span class="kLine"></span> Use Cases</div>
-            <h2>Practical AI. Clear outcomes.</h2>
-          </div>
-          <p>These are the deployments that move the needle — without introducing new liabilities.</p>
-        </div>
-
-        <div class="grid3">
-          <div class="card">
-            <h3>Knowledge Retrieval (RAG)</h3>
-            <p>Turn internal documentation into accurate, permission-aware answers your teams can trust.</p>
-          </div>
-          <div class="card">
-            <h3>Customer & Internal Support</h3>
-            <p>Reduce ticket volume with safe automation and escalation paths when uncertainty is high.</p>
-          </div>
-          <div class="card">
-            <h3>Workflow Automation</h3>
-            <p>Automate repetitive work across operations, compliance, and reporting — with auditability.</p>
-          </div>
-        </div>
-
-        <div style="height:14px"></div>
-
-        <div class="grid2">
-          <div class="card">
-            <h3>Executive Summaries & Insights</h3>
-            <p>AI-generated briefings that synthesize updates, risks, and decisions — with source grounding.</p>
-          </div>
-          <div class="card">
-            <h3>AI Governance Enablement</h3>
-            <p>Policies, controls, evaluation frameworks, and monitoring that let you scale safely.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="process">
-      <div class="wrap">
-        <div class="sectionHead">
-          <div>
-            <div class="kicker"><span class="kLine"></span> Process</div>
-            <h2>From strategy to production — fast.</h2>
-          </div>
-          <p>We keep it simple: define the problem, build the system, deploy securely, and scale with confidence.</p>
-        </div>
-
-        <div class="process">
-          <div class="step"><b>1) Assess</b><span>Goals, constraints, risk, and success metrics.</span></div>
-          <div class="step"><b>2) Design</b><span>Architecture, governance, and deployment plan.</span></div>
-          <div class="step"><b>3) Build</b><span>Integrations, guardrails, evaluation, testing.</span></div>
-          <div class="step"><b>4) Deploy</b><span>Multi-cloud rollout with monitoring and controls.</span></div>
-          <div class="step"><b>5) Scale</b><span>Expand safely with continuous improvement.</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta" id="contact">
-      <div class="wrap">
-        <div class="ctaBox">
-          <div>
-            <h2>Ready to deploy AI without regret?</h2>
-            <p>
-              If you’re exploring AI and want it done correctly the first time — securely, reliably, and built to scale —
-              let’s talk.
-            </p>
-          </div>
-          <div class="heroActions">
-            <a class="btn primary" href="mailto:info@fusecoreai.com?subject=Strategy%20Call%20Request">Email to Book</a>
-            <a class="btn" href="tel:+13022508807">Call +1 (302) 250-8807</a>
-          </div>
-        </div>
-        <p class="small" style="margin:12px 0 0; color:var(--muted);">
-          Note: We intentionally do not list a street address on the website. Meetings are scheduled by call.
-        </p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <div class="footGrid">
-        <div>
-          <div class="logo" style="gap:10px; margin-bottom:8px;">
-            <span class="mark" aria-hidden="true" style="width:28px;height:28px;border-radius:9px;"></span>
-            <div>
-              <div style="font-weight:850; color:var(--text)">Fuse Core AI</div>
-              <div class="small">Enterprise AI Solutions • Security-First • Cloud-Agnostic</div>
-            </div>
-          </div>
-          <div class="small">© 2025 Fuse Core AI. All rights reserved.</div>
-        </div>
-        <div class="footLinks" aria-label="Footer links">
-          <a href="#solutions">Solutions</a>
-          <a href="#usecases">Use Cases</a>
-          <a href="#process">Process</a>
-          <a href="mailto:info@fusecoreai.com">Email</a>
-          <a href="tel:+13022508807">Call</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-</body>
-</html>
+  .miniList{display:grid; gap:10px; margin-top
